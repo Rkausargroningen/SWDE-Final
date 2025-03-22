@@ -1,4 +1,4 @@
-import streamlit as st
+ import streamlit as st
 import networkx as nx
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -49,7 +49,7 @@ def visualize_network():
             'label': pipe['id'],
             'style': 'dashed' if pipe['has_pump'] else 'solid'
         }
-       if pipe['has_pump']:
+        if pipe['has_pump']:
             edge_attrs['label'] += f"\n{pipe['pump_power']}kW"
         G.add_edge(pipe['start'], pipe['end'], **edge_attrs)
 
@@ -437,7 +437,6 @@ def visualize_graph():
     st.pyplot(fig)
 # Add to main() function
 def main():
-    st.title("Model of water distribution network via SWDAE🌊💧")
     # Node creation
     with st.expander("🏗️ Add Node", expanded=True):
         node_type = st.selectbox("Node Type", ["Junction", "Tank", "Reservoir"])
@@ -464,7 +463,7 @@ def main():
             end_node = st.selectbox("End Node", node_ids)
 
         has_pump = st.checkbox("Contains Pump")
-        pump_power = st.number_input("Constant of pump" , min_value=0.1) if has_pump else 0.0
+        pump_power = st.number_input("Pump Power (kW)", min_value=0.0) if has_pump else 0.0
 
         if st.button("Add Pipe"):
             if start_node == end_node:
@@ -589,6 +588,11 @@ def main():
             latex_str += r"\end{bmatrix}"
             st.latex(latex_str)
 
-    
+    #Add footer text
+    st.markdown("---")
+    st.write("© 2025 Streamlit Water Network Demo | [GitHub Repository](Abdullah-Afzal-00/Water_Networks_App)")
+    st.write("Built by [Abdullah Afzal](https://github.com/Abdullah-Afzal-00/)")
+
+
 if __name__ == "__main__":
     main()
